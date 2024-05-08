@@ -19,7 +19,7 @@ export class ChessBoard {
             ],
             [
                 new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White), 
-                new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White),
+                new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White), new Pawn(Color.White)
             ],
             [ null, null, null, null, null, null, null, null ],
             [ null, null, null, null, null, null, null, null ],
@@ -27,7 +27,7 @@ export class ChessBoard {
             [ null, null, null, null, null, null, null, null ],
             [
                 new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black), 
-                new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black),
+                new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black), new Pawn(Color.Black)
             ],
             [
                 new Rook(Color.Black), new Knight(Color.Black), new Bishop(Color.Black), new King(Color.Black),
