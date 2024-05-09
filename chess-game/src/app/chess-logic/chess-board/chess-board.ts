@@ -35,7 +35,7 @@ export class ChessBoard {
                 new Rook(Color.Black), new Knight(Color.Black), new Bishop(Color.Black), new Queen(Color.Black),
                 new King(Color.Black), new Bishop(Color.Black), new Knight(Color.Black), new Rook(Color.Black),
             ],
-        ]
+        ];
 
         this._safeSquares = this.findSafeSquares();
     }

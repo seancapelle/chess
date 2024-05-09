@@ -4,7 +4,7 @@
             [ngClass]="{
                 'dark': isSquareDark(x, y),
                 'light': !isSquareDark(x, y),
-                'selected': isSquareSelected(x, y)
+                'selected-square': isSquareSelected(x, y),
             }"
             (click)="selectingPiece(x, y)"
             >

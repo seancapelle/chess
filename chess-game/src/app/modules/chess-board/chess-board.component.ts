@@ -31,15 +31,11 @@ export class ChessBoardComponent {
   public isSquareSelected(x: number, y: number): boolean {
     if (!this.selectedSquare.piece) return false
 
-    const squareSelected = this.selectedSquare.x === x && this.selectedSquare.y === y
-    return squareSelected;
+    return this.selectedSquare.x === x && this.selectedSquare.y === y;
   }
 
   public isSquareSafeForSelectedPiece(x: number, y: number): boolean {
-    console.log({'x': x, 'y': y, 'safe': this.pieceSafeSquares})
-    // TODO: The below is evaluating to true all the time
-    // return this.pieceSafeSquares.some(coords => coords.x && coords.y);
-    return false;
+    return this.pieceSafeSquares.some(coords => coords.x === x && coords.y === y);
   }
 
   public selectingPiece(x: number, y: number): void {
