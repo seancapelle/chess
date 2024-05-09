@@ -217,6 +217,10 @@ export class ChessBoard {
                         pieceSafeSquares.push({ x, y: 2 });
                     }
                 }
+                // Handle En Passant
+                else if (piece instanceof Pawn && this.canCaptureEnPassant(piece, x, y)) {
+                    pieceSafeSquares.push({ x: x + (piece.color === Color.White ? 1 : -1), y: this._lastMove!.prevY });
+                }
 
                 if (pieceSafeSquares.length) {
                     safeSquares.set(x + "," + y, pieceSafeSquares);
@@ -224,6 +228,29 @@ export class ChessBoard {
             }
         }
         return safeSquares;
+    }
+
+    private canCaptureEnPassant(pawn: Pawn, pawnX: number, pawnY: number): boolean {
+        if (!this._lastMove) return false;
+
+        const { piece, prevX, prevY, currX, currY } = this._lastMove;
+
+        if (
+            !(piece instanceof Pawn) ||
+            pawn.color !== this._playerColor ||
+            Math.abs(currX - prevX) !== 2 ||
+            pawnX == currX ||
+            Math.abs(pawnY - currY) !== 1
+        ) return false;
+
+        const pawnNewPositionX: number = pawnX + (pawn.color === Color.White ? 1 : -1);
+        const pawnNewPositionY: number = currY;
+
+        this.chessBoard[currX][currY] = null;
+        const isPositionSafe: boolean = this.isPositionSafeAfterMove(pawn, pawnX, pawnY, pawnNewPositionX, pawnNewPositionY);
+        this.chessBoard[currX][currY] = piece;
+
+        return isPositionSafe;
     }
 
     private canCastle(king: King, kingSideCastle: boolean): boolean {
@@ -282,9 +309,8 @@ export class ChessBoard {
     }
 
     private handlingSpecialMoves(piece: Piece, prevX: number, prevY: number, newX: number, newY: number): void {
-        // Castling occurred
+        // Castling
         if (piece instanceof King && Math.abs(newY - prevY) === 2) {
-            // newY > prevY === King side castle
             const didCastleOnKingSide: boolean = newY > prevY;
 
             const rookPositionX: number = prevX;
@@ -296,6 +322,17 @@ export class ChessBoard {
             this.chessBoard[rookPositionX][rookPositionY] = null;
             this.chessBoard[rookPositionX][rookNewPositionY] = rook;
             rook.hasMoved = true;
+        }
+        // En Passant
+        else if (
+            piece instanceof Pawn &&
+            this._lastMove &&
+            this._lastMove.piece instanceof Pawn &&
+            Math.abs(this._lastMove.currX - this._lastMove.prevX) === 2 &&
+            prevX === this._lastMove.currX &&
+            newY === this._lastMove.currY
+        ) {
+            this.chessBoard[this._lastMove.currX][this._lastMove.currY] = null;
         }
     }
 }
