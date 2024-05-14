@@ -20,6 +20,7 @@ export class ChessBoardComponent {
   public chessBoardView: (FENChar | null)[][] = this.chessBoard.chessBoardView;
   public get playerColor(): Color { return this.chessBoard.playerColor; };
   public get safeSquares(): SafeSquares { return this.chessBoard.safeSquares; };
+  public get gameOverMessage(): string | undefined { return this.chessBoard.gameOverMessage; };
 
   private selectedSquare: SelectedSquare = { piece: null };
   private pieceSafeSquares: Coords[] = [];
@@ -78,6 +79,9 @@ export class ChessBoardComponent {
   }
 
   public selectingPiece(x: number, y: number): void {
+    // Don't allow selection if game is over
+    if (this.gameOverMessage !== undefined) return;
+
     const piece: FENChar | null = this.chessBoardView[x][y];
 
     if (!piece) return;
