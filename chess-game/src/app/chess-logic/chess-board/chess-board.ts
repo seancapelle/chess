@@ -19,6 +19,8 @@ export class ChessBoard {
     private _isGameOver: boolean = false;
     private _gameOverMessage: string | undefined;
 
+    private fullNumberOfMoves: number = 1;
+
     constructor() {
         this.chessBoard = [
             [    
@@ -333,6 +335,8 @@ export class ChessBoard {
         this.isInCheck(this._playerColor, true);
         this._safeSquares = this.findSafeSquares();
         this._isGameOver = this.isGameFinished();
+
+        if (this._playerColor === Color.White) this.fullNumberOfMoves++;
     }
 
     private handlingSpecialMoves(piece: Piece, prevX: number, prevY: number, newX: number, newY: number): void {

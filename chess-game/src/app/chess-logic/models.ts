@@ -7,6 +7,7 @@ export type Coords = {
     y: number;
 }
 
+// Forsyth-Edwards (FEN) notation for defining a particular game position
 export enum FENChar {
     WhitePawn = "P",
     WhiteKnight = "N",
